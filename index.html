@@ -1,0 +1,114 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vura Multi-Vendor Platform Hub</title>
+</head>
+<body style="font-family: sans-serif; background-color: #f3f4f6; margin: 0; padding: 40px 20px;">
+
+    <div style="max-width: 440px; margin: 0 auto;">
+
+        <!-- HEADER PANEL -->
+        <div style="background: #131921; color: white; padding: 20px; border-radius: 8px 8px 0 0; text-align: center;">
+            <h1 style="margin: 0; font-size: 24px; letter-spacing: 1px; color: #ff9900;">VURA</h1>
+            <p style="margin: 5px 0 0 0; font-size: 13px; color: #ccc;">E-Commerce Engine & Seller Portal</p>
+        </div>
+
+        <!-- AUTOMATED SELLER PROVISIONING MODULE -->
+        <div style="background: white; padding: 25px; margin-bottom: 25px; border-radius: 0 0 8px 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+            <h3 style="margin-top: 0; color: #333; border-bottom: 2px solid #2e7d32; padding-bottom: 5px;">Business Merchant Activation</h3>
+            <p style="font-size: 13px; color: #666; margin-top: 5px;">Enter your business details below to start selling instantly.</p>
+
+            <label style="display: block; font-size: 12px; font-weight: bold; color: #555; margin-bottom: 5px;">Business Store Name</label>
+            <input type="text" id="merchantName" placeholder="e.g. Johnny's Wholesale" style="width: 100%; box-sizing: border-box; padding: 10px; border: 1px solid #ccc; border-radius: 4px; margin-bottom: 12px; font-size: 14px;">
+
+            <label style="display: block; font-size: 12px; font-weight: bold; color: #555; margin-bottom: 5px;">What main product will you sell?</label>
+            <input type="text" id="productCategory" placeholder="e.g. Luxury Sneakers, Phone Cases" style="width: 100%; box-sizing: border-box; padding: 10px; border: 1px solid #ccc; border-radius: 4px; margin-bottom: 15px; font-size: 14px;">
+
+            <!-- PLAN CHOICES GRID -->
+            <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+                <div id="tier1" onclick="selectTier('early_bird', 1.99)" style="flex: 1; border: 2px solid #2e7d32; padding: 12px; border-radius: 6px; text-align: center; cursor: pointer; background: #f0fdf4;">
+                    <strong style="color: #2e7d32; display: block; font-size: 14px;">Early Bird</strong>
+                    <span style="font-size: 20px; font-weight: bold; color: #111;">$1.99</span><span style="font-size: 11px; color:#666;">/mo</span>
+                    <span style="display: block; font-size: 10px; color: #15803d; margin-top: 4px; font-weight: bold;">First 1,000 Slots!</span>
+                </div>
+                <div id="tier2" onclick="selectTier('professional', 4.99)" style="flex: 1; border: 1px solid #e5e7eb; padding: 12px; border-radius: 6px; text-align: center; cursor: pointer;">
+                    <strong style="color: #4b5563; display: block; font-size: 14px;">Professional</strong>
+                    <span style="font-size: 20px; font-weight: bold; color: #111;">$4.99</span><span style="font-size: 11px; color:#666;">/mo</span>
+                    <span style="display: block; font-size: 10px; color: #6b7280; margin-top: 4px;">Advanced Tools</span>
+                </div>
+            </div>
+
+            <!-- VURA CO-PILOT SETUP SWITCH BUTTONS -->
+            <button id="autoCreateBtn" style="width: 100%; padding: 14px; background: #ff9900; color: #111; border: none; border-radius: 4px; font-weight: bold; cursor: pointer; font-size: 14px; margin-bottom: 10px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                ✨ Let Vura Auto-Create My Store For Me
+            </button>
+
+            <p id="sub-status" style="margin-top: 12px; margin-bottom: 0; font-size: 13px; text-align: center; font-weight: bold; line-height: 1.4;"></p>
+        </div>
+
+        <!-- NEW VISUAL CONFIRMATION DEPLOYMENT VIEW -->
+        <div id="deployedStoreBox" style="background: white; padding: 25px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); display: none;">
+            <h3 style="margin-top: 0; color: #15803d; border-bottom: 2px solid #15803d; padding-bottom: 5px;">🚀 Live Vura Storefront Active</h3>
+            <p style="font-size: 14px; color: #333; margin-bottom: 5px;"><strong>Store Name:</strong> <span id="displayStoreName"></span></p>
+            <p style="font-size: 14px; color: #333; margin-bottom: 15px;"><strong>Active Catalog:</strong> <span id="displayCategory"></span> Starter Kit Deployed</p>
+
+            <div style="background: #f9fafb; border: 1px dashed #ccc; padding: 15px; border-radius: 6px; text-align: center; font-size: 13px; color: #555;">
+                🌐 Your live customer link:<br>
+                <strong style="color: #6772e5;">https://vura.app<span id="storeUrlSlug"></span></strong>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        let chosenTier = 'early_bird';
+        let chosenPrice = 1.99;
+
+        function selectTier(tier, price) {
+            chosenTier = tier;
+            chosenPrice = price;
+
+            const t1 = document.getElementById('tier1');
+            const t2 = document.getElementById('tier2');
+
+            if (tier === 'early_bird') {
+                t1.style.border = "2px solid #2e7d32"; t1.style.background = "#f0fdf4";
+                t2.style.border = "1px solid #e5e7eb"; t2.style.background = "none";
+            } else {
+                t2.style.border = "2px solid #2e7d32"; t2.style.background = "#f0fdf4";
+                t1.style.border = "1px solid #e5e7eb"; t1.style.background = "none";
+            }
+        }
+
+        // Automatic store generation sequence
+        document.getElementById('autoCreateBtn').addEventListener('click', () => {
+            const name = document.getElementById('merchantName').value.trim();
+            const category = document.getElementById('productCategory').value.trim();
+            const status = document.getElementById('sub-status');
+            const deployedBox = document.getElementById('deployedStoreBox');
+
+            if (!name || !category) {
+                status.style.color = "#c62828";
+                status.innerText = "⚠️ Please enter both a store name and product type first!";
+                return;
+            }
+
+            status.style.color = "#ff9900";
+            status.innerText = "⚡ Vura engine initializing... Generating cloud database, building digital inventory grid, and linking Stripe Connect keys...";
+
+            setTimeout(() => {
+                status.style.color = "#2e7d32";
+                status.innerText = "🎉 Success! Vura has automatically generated your shop structure at the $" + chosenPrice + "/mo tier!";
+
+                // Render the newly deployed store attributes info metrics on card view box
+                document.getElementById('displayStoreName').innerText = name;
+                document.getElementById('displayCategory').innerText = category;
+                document.getElementById('storeUrlSlug').innerText = name.toLowerCase().replace(/[^a-z0-9]/g, '');
+                deployedBox.style.display = "block";
+            }, 2500);
+        });
+    </script>
+</body>
+</html>

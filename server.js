@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+// Fixed: Securely references environment variables to pass GitHub's scanner safely
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 const app = express();
@@ -51,7 +52,7 @@ app.post('/create-marketplace-checkout', async (req, res) => {
       payment_intent_data: {
         application_fee_amount: platformFeeAmount, // Your cut in cents (e.g., 100 = $1.00)
         transfer_data: {
-          destination: sellerStripeId, // Routes the remaining $9.00 to the seller automatically!
+          destination: sellerStripeId, // Routes the share to the seller automatically!
         },
       },
       success_url: 'https://onrender.com',
